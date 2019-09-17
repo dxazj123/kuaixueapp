@@ -6,5 +6,7 @@ return array(
 	//默认时区
 	'DEFAULT_TIME_ZONE' => 'PRC',
 	//session自动开启
-	'SESSION_AUTO_START' => TRUE
+	'SESSION_AUTO_START' => TRUE,
+	'VAR_ACTION' => 'a',
+	'VAR_CONTROLLER' => 'c',
 	);

@@ -5,6 +5,20 @@
  			self::_set_url();
  			spl_autoload_register(array(__CLASS__,'_autoload'));
  			self::_create_demo();
+ 			self::_app_run();
+ 		}
+ 		/**
+ 		 * 实例化应用控制器
+ 		 */
+ 		private static function _app_run(){
+ 			$c = isset($_GET[C('VAR_CONTROLLER')]) ? $_GET[C('VAR_CONTROLLER')] : 'Index';
+ 			$a = isset($_GET[C('VAR_ACTION')]) ? $_GET[C('VAR_ACTION')] : 'index';
+
+ 			$c .= 'Controller';
+
+ 			$obj = new $c();
+
+ 			$obj->$a();
  		}
  		/**
  		 * 创建默认控制器
@@ -13,7 +27,7 @@
  			$path = APP_CONTROLLER_PATH . '/IndexController.class.php';
  			$str = <<<str
 <?php
-	class IndexController{
+	class IndexController extends Controller{
 		public function index(){
 			echo 'OK';
 		}
@@ -26,7 +40,7 @@ str;
  		 * 自动载入功能
  		 */
  		private static function _autoload($className){
- 			echo $className;
+ 			include APP_CONTROLLER_PATH . '/' .$className . '.class.php';
  		}
  		/**
  		 * 设置外部路径
