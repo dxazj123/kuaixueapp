@@ -14,6 +14,9 @@
  			$c = isset($_GET[C('VAR_CONTROLLER')]) ? $_GET[C('VAR_CONTROLLER')] : 'Index';
  			$a = isset($_GET[C('VAR_ACTION')]) ? $_GET[C('VAR_ACTION')] : 'index';
 
+ 			define('CONTROLLER', $c);
+ 			define('ACTION',$a);
+
  			$c .= 'Controller';
 
  			$obj = new $c();
@@ -29,7 +32,7 @@
 <?php
 	class IndexController extends Controller{
 		public function index(){
-			echo 'OK';
+			echo '欢迎使用HD框架：）';
 		}
 	}
 ?> 			

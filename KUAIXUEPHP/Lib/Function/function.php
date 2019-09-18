@@ -85,4 +85,8 @@
  			return $config;
  		}
  	}
-?>
+
+ 	function print_const(){
+ 		$const = get_defined_constants(true);
+ 		p($const['user']);
+ 	}

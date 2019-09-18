@@ -51,32 +51,33 @@
 		<div class="pic">
 			:(
 		</div>
-	</div>
-	<div class="msg">
-		<?php echo $e['message'] ?>
-	</div>
-	<?php 
-		if(DEBUG && isset($e['file'])):
-	 ?>
-	<div class="info">
-		<div class="title">
-			错误的位置：
+		<div class="msg">
+			<?php echo $e['message'] ?>
 		</div>
-		<div class="path">
-			FILE:<?php echo $e['file'] . 'Line:' . $e['line'] ?>
+		<?php 
+			if(DEBUG && isset($e['file'])):
+		 ?>
+		<div class="info">
+			<div class="title">
+				错误的位置：
+			</div>
+			<div class="path">
+				FILE:<?php echo $e['file'] . 'Line:' . $e['line'] ?>
+			</div>
 		</div>
-	</div>
-	<?php endif ?>
-	<?php if(isset($e['trace'])): ?>
-	<div class="info">
-		<div class="title">
-			Trace
+		<?php endif ?>
+		<?php if(isset($e['trace'])): ?>
+		<div class="info">
+			<div class="title">
+				Trace
+			</div>
+			<div class="path">
+				<?php echo nl2br($e['trace']) ?>
+			</div>
 		</div>
-		<div class="path">
-			<?php echo nl2br($e['trace']) ?>
-		</div>
-	</div>
+
 <?php endif ?>
+	</div>
 	<div class="copyright">
 		<a href="http://www.kuaixuewang.com" title="快学网" target="_blank">
 			<b>HD开源框架</b>
@@ -84,5 +85,6 @@
 		(<?php echo KUAIXUEPHP_VERSION ?>)
 		[<a href="http://www.kuaixuewang.com" class="houdunwang" title="快学网" target="_blank">快学网快人一步</a>]
 	</div>
+
 </body>
 </html>

@@ -34,12 +34,31 @@
 			define('APP_TPL_PATH', APP_PATH.'/Tpl');
 			define('APP_PUBLIC_PATH', APP_TPL_PATH.'/Public');
 			define('KUAIXUEPHP_VERSION', '1.0');
+			//创建公共
+			define('COMMON_PATH',ROOT_PATH . '/Common');
+			//公共配置项文件夹
+			define('COMMON_CONFIG_PATH', COMMON_PATH . '/Config');
+			//公共模型文件夹
+			define('COMMON_MODEL_PATH', COMMON_PATH . '/Model');
+			//公共库文件夹
+			define('COMMON_LIB_PATH', COMMON_PATH . '/Lib');
+
+			define('IS_POST',($_SERVER['REQUEST_METHOD'] == 'POST' ? true : false));
+			if(isset($_SERVER['HTTP_X_REQUEST_WITH']) && $_SERVER['HTTP_X_REQUEST_WITH'] == 'XMLHttpRequest'){
+				define('IS_AJAX',true);
+			}else{
+				define('IS_AJAX',false);
+			}
+			
 		}
 		/**
 		 * 创建应用目录
 		 */
 		private static function _create_dir(){
 			$arr = array(
+				COMMON_CONFIG_PATH,
+				COMMON_MODEL_PATH,
+				COMMON_LIB_PATH,
 				APP_PATH,
 				APP_CONFIG_PATH,
 				APP_CONTROLLER_PATH,

@@ -93,19 +93,41 @@ class Log{
  		if(is_null($var) && is_null($value)){
  			return $config;
  		}
+ 	}
+
+ 	function print_const(){
+ 		$const = get_defined_constants(true);
+ 		p($const['user']);
  	}/**
  * 父类controller
  */
 	class Controller{
-
+		private $var =array();
 		public function __construct(){
-			echo '父类必须执行构造方法';
+			
 			if(method_exists($this,'__init')){
 				$this->__init();
 			}
 			if(method_exists($this,'__auto')){
 				$this->__auto();
 			}
+		}
+
+		protected function display($tpl=NULL){
+			if(is_null($tpl)){
+				$path =  APP_TPL_PATH . '/' .CONTROLLER . '/' .ACTION . '.html';
+			}else{
+				$suffix = strrchr($tpl, '.');
+				$tpl = empty($suffix) ? $tpl . '.html' : $tpl;
+				$path = APP_TPL_PATH . '/' .CONTROLLER . '/' . $tpl;
+			}
+
+			if(!is_file($path)) halt($path . '模板文件不存在');
+			extract($this->var);
+			include $path;
+		}
+		protected function assign($var,$value){
+			$this->var[$var] = $value;
 		}
 		/**
 		 * 成功提示方法
@@ -135,6 +157,9 @@ class Log{
  			$c = isset($_GET[C('VAR_CONTROLLER')]) ? $_GET[C('VAR_CONTROLLER')] : 'Index';
  			$a = isset($_GET[C('VAR_ACTION')]) ? $_GET[C('VAR_ACTION')] : 'index';
 
+ 			define('CONTROLLER', $c);
+ 			define('ACTION',$a);
+
  			$c .= 'Controller';
 
  			$obj = new $c();
@@ -150,7 +175,7 @@ class Log{
 <?php
 	class IndexController extends Controller{
 		public function index(){
-			echo 'OK';
+			echo '欢迎使用HD框架：）';
 		}
 	}
 ?> 			
