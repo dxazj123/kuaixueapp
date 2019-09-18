@@ -9,4 +9,8 @@ return array(
 	'SESSION_AUTO_START' => TRUE,
 	'VAR_ACTION' => 'a',
 	'VAR_CONTROLLER' => 'c',
+	//是否开启日志
+	'SAVE_LOG' =>  true,
+	'ERROR_URL' => '',
+	'ERROR_MSG' => 'website error'
 	);
