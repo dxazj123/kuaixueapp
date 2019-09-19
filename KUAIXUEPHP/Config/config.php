@@ -12,5 +12,7 @@ return array(
 	//是否开启日志
 	'SAVE_LOG' =>  true,
 	'ERROR_URL' => '',
-	'ERROR_MSG' => 'website error'
+	'ERROR_MSG' => 'website error',
+	//自动加载Common/Lib目录下的文件，可以载入多个
+	'AUTO_LOAD_FILE' => array()
 	);

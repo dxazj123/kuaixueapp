@@ -1,9 +1,9 @@
 <?php
 	class IndexController extends Controller{
-		
 		public function index(){
-			p(IS_AJAX);
-			$this->display();
+			// echo '欢迎使用HD框架：）';
+			$Code = new Code();
+			$Code->show();
 		}
 	}
 ?> 			

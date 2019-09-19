@@ -23,6 +23,11 @@
 			define('LIB_PATH',KUAIXUEPHP_PATH.'/Lib');
 			define('CORE_PATH',LIB_PATH.'/Core');
 			define('FUNCTION_PATH',LIB_PATH.'/function');
+
+			define('EXTEND_PATH',KUAIXUEPHP_PATH . '/Extends');
+			define('TOOL_PATH',EXTEND_PATH . '/Tool');
+			define('ORG_PAHT',EXTEND_PATH . '/Org');
+
 			define('ROOT_PATH',dirname(KUAIXUEPHP_PATH));
 			//临时目录
 			define('TEMP_PATH',ROOT_PATH . '/Temp' );

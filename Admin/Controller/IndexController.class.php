@@ -1,7 +1,7 @@
 <?php
 	class IndexController extends Controller{
 		public function index(){
-			echo 'OK';
+			echo '欢迎使用HD框架：）';
 		}
 	}
 ?> 			

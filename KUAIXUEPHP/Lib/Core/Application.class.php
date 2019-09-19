@@ -2,6 +2,7 @@
  	final class Application{
  		public static function run(){
  			self::_init();
+ 			self::_user_import();
  			self::_set_url();
  			spl_autoload_register(array(__CLASS__,'_autoload'));
  			self::_create_demo();
@@ -19,9 +20,13 @@
 
  			$c .= 'Controller';
 
- 			$obj = new $c();
-
- 			$obj->$a();
+ 			if(class_exists($c)){
+ 				$obj = new $c();
+ 				$obj->$a;
+ 			}else{
+ 				$obj = new EmptyController();
+ 				$obj->index();
+ 			}
  		}
  		/**
  		 * 创建默认控制器
@@ -43,7 +48,33 @@ str;
  		 * 自动载入功能
  		 */
  		private static function _autoload($className){
- 			include APP_CONTROLLER_PATH . '/' .$className . '.class.php';
+ 			switch (true) {
+ 				//判断是否是控制器
+ 				//controller
+ 				case strlen($className) > 10 && substr($className,-10) =='Controller':
+ 					$path = APP_CONTROLLER_PATH . '/' .$className . '.class.php';
+ 					if(!is_file($path)){
+ 						$emptyPath = APP_CONTROLLER_PATH . '/EmptyController.class.php';
+ 						if(is_file($emptyPath)){
+ 							include $emptyPath;
+ 							return;
+ 						}else{
+ 							halt($path . '控制器未找到');
+ 						}
+ 					} 
+ 					include $path;
+ 					break;
+ 				
+ 				default:
+ 					$path = TOOL_PATH . '/' .$className .'.class.php';
+ 					if(!is_file($path)) halt($path . '类未找到');
+ 						
+ 						
+ 					 
+ 					include $path;
+ 					break;
+ 			}
+ 			
  		}
  		/**
  		 * 设置外部路径
@@ -63,6 +94,20 @@ str;
  		private static function _init(){
  			//加载配置项
  			C(include CONFIG_PATH . '/config.php');
+ 			//加载公共配置项
+ 			$commonPath = COMMON_CONFIG_PATH . '/config.php';
+
+ 			$commonConfig = <<<str
+<?php
+return array(
+	//配置项 => 配置值
+);
+?>
+str;
+			is_file($commonPath) || file_put_contents($commonPath,$commonConfig);
+
+			C(include $commonPath);
+
  			$userPath = APP_CONFIG_PATH . '/config.php';
 
  			$userConfig = <<<str
@@ -78,6 +123,15 @@ str;
 			//设置默认时区
 			date_default_timezone_set(C('DEFAULT_TIME_ZONE'));
 			C('SESSION_AUTO_START') && session_start();
+ 		}
+
+ 		private static function _user_import(){
+ 			$fileArr = C('AUTO_LOAD_FILE');
+ 			if(is_array($fileArr) && !empty($fileArr)){
+ 				foreach ($fileArr as $v) {
+ 					require_once COMMON_LIB_PATH . '/' .$v;
+ 				}
+ 			}
  		}
  		
  	}
