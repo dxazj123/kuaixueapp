@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div.hdphp_notice{
+			border:1px solid #990000;
+			font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+			padding-left: 20px;
+			margin:1px;
+		}
+		div.hdphp_notice h3{
+			font-size: 18px;
+			margin: 20px ;
+		}
+		div.hdphp_notice p{
+			font-size: 14px;
+			margin: 15px 0;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="hdphp_notice">
+		<h3 style="font-size: 18px;">
+			<?php echo $error ?>
+		</h3>
+		<p>
+			Severity: <?php echo $errno ?>
+		</p>
+		<p>
+			File:<?php echo $file ?>
+		</p>
+		<p>
+			Line:<?php echo $line ?>
+		</p>
+		<p style="color:#099">
+			HD开源框架 版本:<?php echo KUAIXUEPHP_VERSION ?>
+		</p>
+	</div>
+</body>
+</html>

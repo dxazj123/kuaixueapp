@@ -145,11 +145,38 @@ class Log{
 	}final class Application{
  		public static function run(){
  			self::_init();
+ 			set_error_handler(array(__CLASS__,'error'));
+ 			register_shutdown_function(array(__CLASS__,'fatal_error'));
  			self::_user_import();
  			self::_set_url();
  			spl_autoload_register(array(__CLASS__,'_autoload'));
  			self::_create_demo();
  			self::_app_run();
+ 		}
+ 		public static function fatal_error(){
+ 			if($e = error_get_last()){
+ 				self::error($e['type'],$e['message'],$e['file'],$e['line']);
+ 			}
+ 		}
+ 		public static function error($errno,$error,$file,$line){
+ 			switch ($errno) {
+ 				case E_ERROR:
+ 				case E_PARSE:
+ 				case E_CORE_ERROR:
+ 				case E_COMPILE_ERROR:
+ 				case E_USER_ERROR:
+ 					$msg = $error .$file ."第{$line}行";
+ 					halt($msg);	
+ 					break;
+ 				case E_STRICT:
+ 				case E_USER_WARNING:
+ 				case E_USER_NOTICE:	
+ 				default:
+ 					if(DEBUG){
+ 						include DATA_PATH . '/Tpl/notice.html';
+ 					}
+ 					break;
+ 			}
  		}
  		/**
  		 * 实例化应用控制器
@@ -165,7 +192,16 @@ class Log{
 
  			if(class_exists($c)){
  				$obj = new $c();
- 				$obj->$a;
+ 				if(!method_exists($obj,$a)){
+ 					if(method_exists($obj,'__empty')){
+ 						$obj->__empty();
+ 					}else{
+ 						halt($c . '控制器中' . $a .'方法不存在');
+ 					}
+ 				}else{
+ 					$obj->$a();
+ 				}
+ 				
  			}else{
  				$obj = new EmptyController();
  				$obj->index();
